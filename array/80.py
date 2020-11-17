@@ -16,9 +16,9 @@
 
 """
 
-
+"""
 class Solution:
-    def removeDuplicates(self, nums: list) -> int:
+    def removeDuplicates(self, nums: List[int]) -> int:
         len_nums = len(nums)
         if len_nums < 2:
             return len_nums
@@ -33,8 +33,25 @@ class Solution:
                 nums[left] = nums[right]
             right += 1
         return left + 1
+"""
+
+
+class Solution:
+    def removeDuplicates(self, nums: list) -> int:
+        len_nums = len(nums)
+        if len_nums < 2:
+            return len_nums
+        left, right = 2, 2
+        while right < len_nums:
+            if nums[left - 2] != nums[right]:
+                nums[left] = nums[right]
+                left += 1
+
+            right += 1
+        print(nums)
+        return left
 
 
 if __name__ == "__main__":
     solu = Solution()
-    print(solu.removeDuplicates([1,1,1,2,2,3]))
+    print(solu.removeDuplicates([0,0,1,1,1,1,2,3,3]))
