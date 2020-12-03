@@ -23,7 +23,7 @@ class ListNode:
         self.val = val
         self.next = next
 
-        
+
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         cur = faker = ListNode(0)
