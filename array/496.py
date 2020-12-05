@@ -32,28 +32,50 @@ nums1和nums2 的数组大小都不超过1000。
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
 
+# 使用hash表来做
+# class Solution:
+#     def nextGreaterElement(self, nums1: list, nums2: list) -> list:
+#         d = dict()
+#         res = []
+#         for n in nums1:
+#             num = d.get(n, None)
+#             if num is None:
+#                 flag = False
+#                 num = 0
+#             else:
+#                 num = num + 1
+#             for i in range(num, len(nums2)):
+#                 d[nums2[i]] = i
+#                 if flag and nums2[i] > n:
+#                     res.append(nums2[i])
+#                     break
+#                 elif nums2[i] == n:
+#                     flag = True
+#             else:
+#                 res.append(-1)
+#
+#         return res
 
+
+# 使用单调栈来做
 class Solution:
     def nextGreaterElement(self, nums1: list, nums2: list) -> list:
         d = dict()
+        queue = []
+        for num in nums2:
+            if len(queue) == 0:
+                queue.append(num)
+            else:
+                while len(queue) > 0:
+                    if num > queue[-1]:
+                        d[queue[-1]] = num
+                        queue.pop()
+                    else:
+                        break
+
+                queue.append(num)
         res = []
-        for n in nums1:
-            num = d.get(n, None)
-            if num is None:
-                flag = False
-                num = 0
-            else:
-                num = num + 1
-            for i in range(num, len(nums2)):
-                d[nums2[i]] = i
-                if flag and nums2[i] > n:
-                    res.append(nums2[i])
-                    break
-                elif nums2[i] == n:
-                    flag = True
-            else:
-                res.append(-1)
+        for i in nums1:
+            res.append(d.get(i, -1))
 
         return res
-
-

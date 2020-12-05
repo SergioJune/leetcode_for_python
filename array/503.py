@@ -16,27 +16,59 @@
 """
 
 
+# class Solution:
+#     def nextGreaterElements(self, nums: list) -> list:
+#         stack = []
+#         max_stack = []
+#         d = dict()
+#         for num in nums:
+#             while len(stack) > 0:
+#                 if num > stack[-1]:
+#                     eles = d.get(stack[-1], [])
+#                     eles.append(num)
+#                     d[stack[-1]] = eles
+#                     stack.pop()
+#                 else:
+#                     break
+#             stack.append(num)
+#
+#             if len(max_stack) == 0:
+#                 max_stack.append(num)
+#             else:
+#                 if max_stack[-1] < num:
+#                     max_stack.append(num)
+#
+#         # 需要清空 stack
+#         i = 0
+#         while len(stack) > 0:
+#             val = stack.pop()
+#             while i < len(max_stack) and max_stack[i] <= val:
+#                 i += 1
+#             eles = d.get(val, [])
+#             if i == len(max_stack):
+#                 eles.append(-1)
+#             else:
+#                 eles.append(max_stack[i])
+#             d[val] = eles
+#         res = [-1] * len(nums)
+#         for i in range(len(nums) - 1, -1, -1):
+#             res[i] = d[nums[i]].pop()
+#
+#         return res
+
+
+# 优化
 class Solution:
     def nextGreaterElements(self, nums: list) -> list:
-        d = dict()
-        max_value = -1
         res = [-1] * len(nums)
-        for i in range(len(nums)):
-            num = nums[i]
-            for j in range(i + 1, len(nums)):
-                if nums[j] > num:
-                    res[i] = nums[j]
-                    if d.get(num, None) is None:
-                        d[num] = nums[j]
-                    break
-            else:
-                val = d.get(num, -1)
-                if val == -1 and max_value > num:
-                    res[i] = max_value
-                else:
-                    res[i] = val
-            if max_value < num:
-                max_value = num
+        stack = []
+        for i in range(2 * len(nums) - 1, -1, -1):
+            index = i % len(nums)
+            while len(stack) > 0 and nums[index] >= nums[stack[-1]]:
+                stack.pop()
+
+            res[index] = -1 if len(stack) == 0 else nums[stack[-1]]
+            stack.append(index)
 
         return res
 
