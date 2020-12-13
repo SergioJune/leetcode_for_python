@@ -107,6 +107,7 @@ def quick_sort(arr):
 
 if __name__ == "__main__":
     arr = [1, 3, 5, 8, 4, 2, 0, -5]
+    arr.sort()
     # bubble_sort(arr)
     # insert_sort(arr)
     # select_sort(arr)
