@@ -35,6 +35,5 @@ class Solution:
         return ans
 
 
-
 if __name__ == "__main__":
     print(Solution().mySqrt(1))
