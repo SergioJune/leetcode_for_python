@@ -25,28 +25,19 @@
 """
 
 
+# 左右两次遍历即可
 class Solution:
     def candy(self, ratings: list) -> int:
-        if len(ratings) == 0:
-            return 0
-        last = ans = cur = 0
-        min_val = ratings[0]
+        res = [1] * len(ratings)
         for i in range(1, len(ratings)):
-            if ratings[i] < min_val:
-                min_val = ratings[i]
-            else:
-                num = i-cur
-                for k in range(cur, i):
-                    ans += num
-                    num -= 1
-                cur = i
+            if ratings[i] > ratings[i-1]:
+                res[i] = res[i-1] + 1
 
-        num = 1
-        for k in range(cur, len(ratings)):
-            ans += num
-            num += 1
+        for i in range(len(ratings)-2, -1, -1):
+            if ratings[i] > ratings[i+1]:
+                res[i] = max(res[i], res[i+1] + 1)
 
-        return ans
+        return sum(res)
 
 
 if __name__ == "__main__":
